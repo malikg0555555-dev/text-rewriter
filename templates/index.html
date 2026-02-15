@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Voice Rewriter - Urdu/Hindi Support</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <span>BrandVoice <span class="urdu-text">آواز</span></span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#languages">Languages</a>
+                <a href="#" id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section with Urdu -->
+        <div class="hero">
+            <h1 class="hero-title">
+                <span class="gradient-text">Transform Your Voice</span>
+                <br>اپنی آواز کو بدلیں
+            </h1>
+            <p class="hero-subtitle">
+                English • اردو • हिंदी • ਪੰਜਾਬੀ
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Input Section -->
+            <div class="card input-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-pen"></i> Your Text / آپ کا متن</h2>
+                    <div class="word-count">
+                        <span id="wordCount">0</span> words
+                    </div>
+                </div>
+                
+                <textarea 
+                    id="inputText" 
+                    placeholder="Enter your text here... اپنا متن یہاں لکھیں..."
+                >We need to increase sales this quarter</textarea>
+                
+                <div class="text-stats">
+                    <span id="charCount">0</span> characters
+                    <select id="inputLanguage" class="language-select">
+                        <option value="en">English</option>
+                        <option value="ur">اردو</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tone Selection -->
+            <div class="card tone-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-palette"></i> Choose Voice / آواز منتخب کریں</h2>
+                    <span class="tone-count" id="toneCount">12 tones</span>
+                </div>
+                
+                <div class="tone-grid" id="toneGrid">
+                    <!-- Tones loaded by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Voice Settings -->
+            <div class="card voice-settings">
+                <div class="card-header">
+                    <h2><i class="fas fa-microphone"></i> Voice Settings / آواز کی ترتیبات</h2>
+                </div>
+                <div class="voice-controls">
+                    <div class="voice-option">
+                        <label>Voice Type:</label>
+                        <select id="voiceGender">
+                            <option value="female">Female / مونث</option>
+                            <option value="male">Male / مذکر</option>
+                        </select>
+                    </div>
+                    <div class="voice-option">
+                        <label>Speed:</label>
+                        <input type="range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1">
+                        <span id="speedValue">1x</span>
+                    </div>
+                    <div class="voice-option">
+                        <label>Pitch:</label>
+                        <input type="range" id="voicePitch" min="0.5" max="2" step="0.1" value="1">
+                        <span id="pitchValue">1x</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transform Button -->
+            <button class="transform-btn" id="transformBtn">
+                <i class="fas fa-magic"></i>
+                Transform Text / متن تبدیل کریں
+                <div class="loading-spinner" id="loadingSpinner"></div>
+            </button>
+
+            <!-- Result Section -->
+            <div class="card result-card" id="resultCard" style="display: none;">
+                <div class="card-header">
+                    <h2><i class="fas fa-star"></i> Result / نتیجہ</h2>
+                    <div class="result-badge" id="resultToneBadge">👔 Professional</div>
+                </div>
+                
+                <div class="result-box" id="resultBox" dir="auto">
+                    <!-- Result appears here -->
+                </div>
+                
+                <div class="result-actions">
+                    <button class="action-btn copy-btn" id="copyBtn">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button class="action-btn voice-btn" id="voiceBtn">
+                        <i class="fas fa-volume-up"></i> Listen
+                    </button>
+                    <button class="action-btn stop-btn" id="stopBtn" style="display: none;">
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                    <select id="voiceLanguage" class="voice-language">
+                        <option value="en">English</option>
+                        <option value="ur">اردو</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                    </select>
+                </div>
+                
+                <div class="result-stats">
+                    <span id="originalWordCount">0</span> words → 
+                    <span id="rewrittenWordCount">0</span> words
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div class="examples-section">
+                <h3><i class="fas fa-lightbulb"></i> Try These / یہ آزمائیں</h3>
+                <div class="example-grid">
+                    <button class="example-btn" data-example="business">
+                        <i class="fas fa-briefcase"></i> Business
+                    </button>
+                    <button class="example-btn" data-example="urdu">
+                        <i class="fas fa-heart"></i> اردو شعر
+                    </button>
+                    <button class="example-btn" data-example="hindi">
+                        <i class="fas fa-heart"></i> हिंदी कविता
+                    </button>
+                    <button class="example-btn" data-example="punjabi">
+                        <i class="fas fa-music"></i> پنجابی بولیاں
+                    </button>
+                </div>
+            </div>
+
+            <!-- Languages Section -->
+            <div class="features" id="languages">
+                <div class="feature-card">
+                    <i class="fas fa-flag feature-icon"></i>
+                    <h4>English</h4>
+                    <p>Professional, Sassy, Corporate, Pirate, Coach, Poetic</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-flag feature-icon"></i>
+                    <h4>اردو</h4>
+                    <p>Urdu translation, Romantic Urdu poetry</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-flag feature-icon"></i>
+                    <h4>हिंदी</h4>
+                    <p>Hindi translation, Hindi poetry</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-flag feature-icon"></i>
+                    <h4>ਪੰਜਾਬੀ</h4>
+                    <p>Punjabi translation, Folk style</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Made with <i class="fas fa-heart"></i> for Urdu & Hindi speakers</p>
+        <p class="footer-links">
+            <a href="#"><i class="fab fa-github"></i> GitHub</a>
+            <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+        </p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+<div class="result-actions">
+    <button class="action-btn copy-btn" id="copyBtn">
+        <i class="fas fa-copy"></i> Copy
+    </button>
+    <button class="action-btn voice-btn" id="voiceBtn">
+        <i class="fas fa-volume-up"></i> Listen
+    </button>
+    <button class="action-btn download-btn" id="downloadBtn">
+        <i class="fas fa-download"></i> Download MP3
+    </button>
+    <button class="action-btn stop-btn" id="stopBtn" style="display: none;">
+        <i class="fas fa-stop"></i> Stop
+    </button>
+    <select id="voiceLanguage" class="voice-language">
+        <option value="en">English</option>
+        <option value="ur" selected>اردو</option>
+        <option value="hi">हिंदी</option>
+    </select>
+</div>
