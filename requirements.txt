@@ -1,0 +1,5 @@
+flask==2.3.3
+flask-cors==4.0.0
+gtts==2.3.2
+httpx==0.23.0
+googletrans==4.0.0rc1
