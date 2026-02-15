@@ -1,7 +1,8 @@
-deep-translator==1.11.4
-httpx==0.23.0
+httpx==0.13.3
+googletrans==3.1.0a0
+flask==3.0.0
+flask-cors==4.0.0
 beautifulsoup4==4.12.3
 requests==2.31.0
 python-dotenv==1.0.0
-flask==3.0.0
 gunicorn==21.2.0
