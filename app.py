@@ -12,9 +12,11 @@ app = Flask(__name__)
 CORS(app)
 
 # Create downloads folder if not exists
-DOWNLOAD_FOLDER = 'downloads'
+DOWNLOAD_FOLDER = '/tmp/downloads'
+
+# Create the directory if it doesn't exist
 if not os.path.exists(DOWNLOAD_FOLDER):
-    os.makedirs(DOWNLOAD_FOLDER)
+    os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
 
 # Comprehensive Urdu phrases dictionary
 URDU_PHRASES = {
